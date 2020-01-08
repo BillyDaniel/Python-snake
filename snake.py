@@ -13,23 +13,21 @@ class Snake:
         self.color = (255,0,0)
         self.body = []
         self.length = 4
-        for x in range(self.length-1):
-            self.pos.append((9-x,10))
+        for x in range(self.length):
+            self.pos.append((10-x,10))
             self.body.append(pygame.draw.rect(self.surface, self.color, (self.pos[x][0]*SPACE, self.pos[x][1]*SPACE, SPACE+1,SPACE+1)))
-        self.rect = pygame.draw.rect(self.surface, self.color, (10*SPACE, 10*SPACE, SPACE+1, SPACE+1))
+        self.rect = self.body[0]
 
     def move(self):
-        if self.boundary_check() or self.hit_check() == True:
+        if self.boundary_check()  == True:
             self.reset()
         else:
-            self.body.insert(0,self.rect)
-            self.rect = self.rect.move(self.dirx, self.diry)
-            #self.body.insert(0,self.rect.move(self.dirx,self.diry))
+            print(self.body)
+            self.body.insert(0,self.rect.move(self.dirx,self.diry))
             self.body.pop()
-            #self.rect = self.body[0]
+            self.rect = self.body[0]
             for snake in self.body:
                 pygame.draw.rect(self.surface, self.color,snake)
-            pygame.draw.rect(self.surface, self.color,self.rect)
 
     def direction(self):
         for event in pygame.event.get():
@@ -68,11 +66,9 @@ class Snake:
 
     def reset(self):
         self.body.clear()
-        for x in range(self.length-1):
+        for x in range(self.length):
             self.body.append(pygame.draw.rect(self.surface, self.color, (self.pos[x][0]*SPACE, self.pos[x][1]*SPACE, SPACE+1,SPACE+1)))
-        self.rect = pygame.draw.rect(self.surface, self.color, (10*SPACE, 10*SPACE, SPACE+1,SPACE+1))
-        #self.rect = pygame.draw.rect(self.surface, self.color, (self.pos[0]*SPACE, self.pos[1]*SPACE, SPACE+1,SPACE+1))
-
+        self.rect = self.body[0]
         self.dirx = -SPACE
         self.diry = 0
 
